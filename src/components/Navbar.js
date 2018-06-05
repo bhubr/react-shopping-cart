@@ -31,7 +31,6 @@ class Navbar extends React.Component {
 
 Navbar.propTypes = {
   cart: PropTypes.array
-
 }
 
 export default Navbar

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import PaginatedProductTable from './components/PaginatedProductTable'
 import Cart from './components/Cart'
+import CartStorage from './helpers/CartStorage'
 
 import './css/App.css'
 
@@ -32,15 +33,16 @@ const withProps = ({ props, Component }) => routerProps => <Component {...props}
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      albums,
-      user: null,
-      cart: []
-    }
     this.onAddToCart = this.onAddToCart.bind(this)
     this.onRemoveFromCart = this.onRemoveFromCart.bind(this)
     this.onCartItemPlusOne = this.onCartItemPlusOne.bind(this)
     this.onCartItemMinusOne = this.onCartItemMinusOne.bind(this)
+    this.cartStorage = new CartStorage()
+    this.state = {
+      albums,
+      user: null,
+      cart: this.cartStorage.get()
+    }
   }
   // reçoit productId
   onAddToCart (productId) {
@@ -59,6 +61,8 @@ class App extends Component {
     } else {
       newCart[indexInCart].qty += 1
     }
+
+    this.cartStorage.set(this.state.user, newCart)
 
     this.setState(() => ({
       cart: newCart
@@ -81,6 +85,8 @@ class App extends Component {
     } else {
       newCart.splice(indexInCart, 1)
     }
+
+    this.cartStorage.set(this.state.user, newCart)
 
     this.setState(() => ({
       cart: newCart
@@ -113,6 +119,7 @@ class App extends Component {
     if (newCart[indexInCart].qty === 0) {
       newCart.splice(indexInCart, 1)
     }
+    this.cartStorage.set(this.state.user, newCart)
 
     this.setState(() => ({
       cart: newCart
