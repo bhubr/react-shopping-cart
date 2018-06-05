@@ -94,7 +94,7 @@ class App extends Component {
   }
   // reçoit productId
   onCartItemMinusOne (productId) {
-    this.onCartItemModifyQty(productId, 1)
+    this.onCartItemModifyQty(productId, -1)
   }
 
   onCartItemModifyQty(productId, increment) {

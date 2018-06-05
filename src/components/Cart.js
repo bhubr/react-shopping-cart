@@ -9,7 +9,15 @@ class Cart extends Component {
     return (
       <Grid container spacing={8}>
         <List>
-          {cart.map((item, i) => <CartItem key={i} product={products.find(p => p.id === item.id)} item={item} onRemoveFromCart={onRemoveFromCart} />)}
+          {cart.map(
+            (item, i) => <CartItem
+              key={i}
+              product={products.find(p => p.id === item.id)}
+              item={item}
+              onRemoveFromCart={onRemoveFromCart}
+              onCartItemPlusOne={onCartItemPlusOne}
+              onCartItemMinusOne={onCartItemMinusOne} />
+          )}
         </List>
       </Grid>
     )

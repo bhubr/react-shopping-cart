@@ -21,19 +21,20 @@ const styles = theme => ({
 })
 
 function CartItem (props) {
-  console.log(props)
-  const { product, item, classes } = props
+  const { product, item, classes, onCartItemPlusOne, onCartItemMinusOne } = props
   return (
     <ListItem>
       <Avatar alt={product.title} src={ `/img/${product.image}` } />
       <ListItemText primary={product.title} secondary={product.artist} />
-      <Button variant="fab" color="primary" aria-label="add" className={classes.button}>
+      <Button variant="fab" color="primary" aria-label="add" className={classes.button}
+        onClick={() => onCartItemPlusOne(product.id)}>
         <AddIcon />
       </Button>
       <Button variant="fab" className={classes.button}>
         { item.qty }
       </Button>
-      <Button variant="fab" color="secondary" aria-label="edit" className={classes.button}>
+      <Button variant="fab" color="secondary" aria-label="edit" className={classes.button}
+        onClick={() => onCartItemMinusOne(product.id)}>
         <RemoveIcon />
       </Button>
     </ListItem>
