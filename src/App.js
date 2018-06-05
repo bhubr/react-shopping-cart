@@ -5,8 +5,6 @@ import PaginatedProductTable from './components/PaginatedProductTable'
 import Cart from './components/Cart'
 import CartStorage from './helpers/CartStorage'
 
-import './css/App.css'
-
 const albums = [
   { id: 10, price: 899, artist: 'Coldplay', title: 'Parachutes', slug: 'coldplay-parachutes', image: 'coldplay-parachutes.jpg' },
   { id: 20, price: 899, artist: 'Coldplay', title: 'A Rush of Blood to the Head', slug: 'coldplay-a-rush-of-blood-to-the-head', image: 'coldplay-a-rush-of-blood-to-the-head.jpg' },

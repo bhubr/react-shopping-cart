@@ -1,36 +1,117 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Badge from '@material-ui/core/Badge'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import Switch from '@material-ui/core/Switch'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
 import { Link } from 'react-router-dom'
-import '../css/Navbar.css'
 
-class Navbar extends React.Component {
-  render () {
-    const { cart } = this.props
+const styles = {
+  appBar: {
+    marginBottom: 30
+  },
+  root: {
+    flexGrow: 1,
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+}
+
+class MenuAppBar extends React.Component {
+  state = {
+    auth: true,
+    anchorEl: null,
+  }
+
+  handleChange = (event, checked) => {
+    this.setState({ auth: checked })
+  }
+
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget })
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null })
+  }
+
+  render() {
+    const { cart, classes } = this.props
     const totalQty = cart.reduce((carry, item) => carry + item.qty, 0)
+    const { auth, anchorEl } = this.state
+    const open = Boolean(anchorEl)
+
     return (
-      <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <Link className="navbar-brand" to="/">MuzikStore</Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarCollapse">
-          <ul className="navbar-nav mr-auto"></ul>
-          {/* <form className="form-inline mt-2 mt-md-0">
-            <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form> */}
-          <Link className="cart-icon-wrapper" to="/cart">
-            <span className="oi oi-cart"></span>
-            <span className="badge badge-pill badge-primary">{totalQty}</span>
-          </Link>
-        </div>
-      </nav>
+      <div className={classes.root}>
+        <AppBar position="static" className={classes.appBar}>
+          <Toolbar>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+
+            <Typography variant="title" color="inherit" className={classes.flex}>
+              <Link to="/">Title</Link>
+            </Typography>
+
+            <Link to="/cart">
+              <Badge className={classes.margin} badgeContent={totalQty} color="primary">
+                <ShoppingCartIcon />
+              </Badge>
+            </Link>
+            {auth && (
+              <div>
+                <IconButton
+                  aria-owns={open ? 'menu-appbar' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                </Menu>
+              </div>
+            )}
+          </Toolbar>
+        </AppBar>
+      </div>
     )
   }
 }
 
-Navbar.propTypes = {
+MenuAppBar.propTypes = {
+  classes: PropTypes.object.isRequired,
   cart: PropTypes.array
 }
 
-export default Navbar
+export default withStyles(styles)(MenuAppBar)
