@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
 import Grid from '@material-ui/core/Grid'
 import CartItem from './CartItem'
@@ -22,6 +23,14 @@ class Cart extends Component {
       </Grid>
     )
   }
+}
+
+Cart.propTypes = {
+  cart: PropTypes.array,
+  products: PropTypes.array,
+  onRemoveFromCart: PropTypes.func,
+  onCartItemPlusOne: PropTypes.func,
+  onCartItemMinusOne: PropTypes.func
 }
 
 export default Cart

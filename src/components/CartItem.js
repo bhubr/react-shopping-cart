@@ -4,14 +4,14 @@ import { withStyles } from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
-import Divider from '@material-ui/core/Divider'
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+// import Divider from '@material-ui/core/Divider'
+import Button from '@material-ui/core/Button'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   root: {
     width: '100%',
@@ -39,6 +39,14 @@ function CartItem (props) {
       </Button>
     </ListItem>
   )
+}
+
+CartItem.propTypes = {
+  product: PropTypes.object,
+  item: PropTypes.object,
+  classes: PropTypes.object,
+  onCartItemPlusOne: PropTypes.func,
+  onCartItemMinusOne: PropTypes.func
 }
 
 export default withStyles(styles)(CartItem)

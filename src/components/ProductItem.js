@@ -9,16 +9,16 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
-import formatPrice from '../helpers/formatPrice'
+// import formatPrice from '../helpers/formatPrice'
 
 const styles = {
   card: {
-    maxWidth: 345,
+    maxWidth: 345
   },
   media: {
     height: 0,
     paddingTop: '100%'
-  },
+  }
 }
 
 const ProductItem = ({ classes, product, onAddToCart }) => {
@@ -54,6 +54,8 @@ const ProductItem = ({ classes, product, onAddToCart }) => {
 
 ProductItem.propTypes = {
   classes: PropTypes.object.isRequired,
+  product: PropTypes.object,
+  onAddToCart: PropTypes.func
 }
 
 export default withStyles(styles)(ProductItem)

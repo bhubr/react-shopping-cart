@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import '../css/Navbar.css'
 
@@ -26,6 +27,11 @@ class Navbar extends React.Component {
       </nav>
     )
   }
+}
+
+Navbar.propTypes = {
+  cart: PropTypes.array
+
 }
 
 export default Navbar

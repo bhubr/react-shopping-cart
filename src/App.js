@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import PaginatedProductTable from './components/PaginatedProductTable'
 import Cart from './components/Cart'
@@ -56,8 +56,7 @@ class App extends Component {
     // Si élément non trouvé
     if (indexInCart === -1) {
       newCart.push({ id: productId, qty: 1 })
-    }
-    else {
+    } else {
       newCart[indexInCart].qty += 1
     }
 
@@ -79,8 +78,7 @@ class App extends Component {
     // Si élément non trouvé
     if (indexInCart === -1) {
       return
-    }
-    else {
+    } else {
       newCart.splice(indexInCart, 1)
     }
 
@@ -97,7 +95,7 @@ class App extends Component {
     this.onCartItemModifyQty(productId, -1)
   }
 
-  onCartItemModifyQty(productId, increment) {
+  onCartItemModifyQty (productId, increment) {
     // const cart = this.state.cart
     const { cart } = this.state
 
@@ -110,8 +108,7 @@ class App extends Component {
     // Si élément non trouvé
     if (indexInCart === -1) {
       return
-    }
-    else {
+    } else {
       newCart[indexInCart].qty += increment
     }
 
@@ -121,8 +118,10 @@ class App extends Component {
   }
   render () {
     const { onAddToCart, onRemoveFromCart, onCartItemPlusOne, onCartItemMinusOne } = this
-    const ProductTableWithProps = withProps({ props: { products: this.state.albums, onAddToCart }, Component: PaginatedProductTable } )
-    const CartWithProps = withProps({ props: { products: this.state.albums, cart: this.state.cart, onRemoveFromCart, onCartItemPlusOne, onCartItemMinusOne }, Component: Cart } )
+    const productTableProps = { products: this.state.albums, onAddToCart }
+    const ProductTableWithProps = withProps({ props: productTableProps, Component: PaginatedProductTable })
+    const cartProps = { products: this.state.albums, cart: this.state.cart, onRemoveFromCart, onCartItemPlusOne, onCartItemMinusOne }
+    const CartWithProps = withProps({ props: cartProps, Component: Cart })
     return (
       <Router>
         <div className="App container">
