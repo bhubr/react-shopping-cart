@@ -1,37 +1,59 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+
 import formatPrice from '../helpers/formatPrice'
 
-class ProductItem extends Component {
-  constructor (props) {
-    super(props)
-    this.onAdd = this.onAdd.bind(this)
-  }
-  onAdd (e) {
-    // const { product: { id } } = this.props
-    const id = this.props.product.id
-    this.props.onAddToCart(id)
-  }
-  render () {
-    const { product } = this.props
-    return (
-      <div className="col-md-4">
-        <div className="card mb-4 box-shadow">
-          <img className="card-img-top" alt={product.artist + ' ' + product.title} src={ `/img/${product.image}` } data-holder-rendered="true" />
-          <div className="card-body">
-            <h5 className="card-title">{product.title}</h5>
-            <p className="card-text">Album by {product.artist}</p>
-            <div className="d-flex justify-content-between align-items-center">
-              <div className="btn-group">
-                <button type="button" className="btn btn-sm btn-primary" onClick={this.onAdd}>Add to Cart</button>
-                <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-              </div>
-              <span className="text-muted">{formatPrice(product.price)}€</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
+const styles = {
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
 }
 
-export default ProductItem
+const ProductItem = ({ classes, product, onAddToCart }) => {
+  // const { classes } = props
+  return (
+    <Grid item xs={12} sm={6}>
+      <Card className={classes.card}>
+        <CardMedia
+          className={classes.media}
+          image={ `/img/${product.image}` }
+          title={product.title}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="headline" component="h2">
+            {product.title}
+          </Typography>
+          <Typography component="p">
+            {product.artist}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" color="primary" onClick={e => onAddToCart(product.id)}>
+            Add to Cart
+          </Button>
+          <Button size="small" color="primary">
+            View
+          </Button>
+        </CardActions>
+      </Card>
+    </Grid>
+  )
+}
+
+ProductItem.propTypes = {
+  classes: PropTypes.object.isRequired,
+}
+
+export default withStyles(styles)(ProductItem)

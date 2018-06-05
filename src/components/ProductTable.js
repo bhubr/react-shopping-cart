@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import ProductItem from './ProductItem'
+import Grid from '@material-ui/core/Grid'
 
 class ProductTable extends Component {
   render() {
     const { products, onAddToCart } = this.props
     return (
-      <div className="row">
+      <Grid container spacing={2}>
         {products.map((p, i) => <ProductItem key={i} product={p} onAddToCart={onAddToCart} />)}
-      </div>
+      </Grid>
     )
   }
 }
