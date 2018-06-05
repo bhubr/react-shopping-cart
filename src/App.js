@@ -108,8 +108,10 @@ class App extends Component {
     // Si élément non trouvé
     if (indexInCart === -1) {
       return
-    } else {
-      newCart[indexInCart].qty += increment
+    }
+    newCart[indexInCart].qty += increment
+    if (newCart[indexInCart].qty === 0) {
+      newCart.splice(indexInCart, 1)
     }
 
     this.setState(() => ({
