@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import ProductTable from './components/ProductTable'
+import PaginatedProductTable from './components/PaginatedProductTable'
+
+import './App.css'
 
 const albums = [
   { id: 10, price: 899, artist: 'Coldplay', title: 'Parachutes', slug: 'coldplay-parachutes', image: 'coldplay-parachutes.jpg' },
@@ -16,8 +19,16 @@ const albums = [
   { id: 110, price: 1399, artist: 'Jeff Beck', title: 'Loud Hailer', slug: 'jeff-beck-loud-hailer', image: 'jeff-beck-loud-hailer.jpg' },
   { id: 120, price: 1499, artist: 'John Mayer', title: 'Born and Raised', slug: 'john-mayer-born-and-raised', image: 'john-mayer-born-and-raised.jpg' },
   { id: 130, price: 1099, artist: 'John Mayer', title: 'Room for Squares', slug: 'john-mayer-room-for-squares', image: 'john-mayer-room-for-squares.jpg' },
-  { id: 140, price: 1099, artist: 'John Mayer', title: 'Where The Light Is', slug: 'john-mayer-where-the-light-is', image: 'john-mayer-where-the-light-is.jpg' }
+  { id: 140, price: 1099, artist: 'John Mayer', title: 'Where The Light Is', slug: 'john-mayer-where-the-light-is', image: 'john-mayer-where-the-light-is.jpg' },
+  { id: 140, price: 899, artist: 'Johnny Cash', title: 'Ring Of Fire', slug: 'johnny-cash-ring-of-fire', image: 'johnny-cash-ring-of-fire.jpg' },
+  { id: 140, price: 1049, artist: 'Johnny Cash', title: 'The Essential', slug: 'johnny-cash-the-essential', image: 'johnny-cash-the-essential.jpg' },
+  { id: 140, price: 1199, artist: 'Joni Mitchell', title: 'Blue', slug: 'joni-mitchell-blue', image: 'joni-mitchell-blue.jpg' },
+  { id: 140, price: 1099, artist: 'Nirvana', title: 'Nevermind', slug: 'nirvana-nevermind', image: 'nirvana-nevermind.jpg' }
 ]
+
+const Cart = () => (<h1>Cart</h1>)
+
+const withProps = ({ props, Component }) => routerProps => <Component {...props} {...routerProps} />
 
 class App extends Component {
   constructor (props) {
@@ -53,11 +64,17 @@ class App extends Component {
   //   })
   // }
   render () {
+    const ProductTableWithProps = withProps({ props: { products: this.state.albums }, Component: PaginatedProductTable } )
     return (
-      <div className="container">
-        <Navbar user={this.state.user} cart={this.state.cart} />
-        <ProductTable products={this.state.albums} />
-      </div>
+      <Router>
+        <div className="App container">
+          <Navbar user={this.state.user} cart={this.state.cart} />
+
+          <Route exact path="/" component={ProductTableWithProps} />
+          <Route path="/page/:page" component={ProductTableWithProps} />
+          <Route path="/cart" component={Cart} />
+        </div>
+      </Router>
     )
   }
 }

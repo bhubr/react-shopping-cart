@@ -7,7 +7,7 @@ class ProductItem extends Component {
     return (
       <div className="col-md-4">
         <div className="card mb-4 box-shadow">
-          <img className="card-img-top" src={ `/img/${product.image}` } data-holder-rendered="true" />
+          <img className="card-img-top" alt={product.artist + ' ' + product.title} src={ `/img/${product.image}` } data-holder-rendered="true" />
           <div className="card-body">
             <h5 className="card-title">{product.title}</h5>
             <p className="card-text">Album by {product.artist}</p>
