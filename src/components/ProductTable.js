@@ -6,7 +6,7 @@ class ProductTable extends Component {
   render() {
     const { products, onAddToCart } = this.props
     return (
-      <Grid container spacing={2}>
+      <Grid container spacing={8}>
         {products.map((p, i) => <ProductItem key={i} product={p} onAddToCart={onAddToCart} />)}
       </Grid>
     )

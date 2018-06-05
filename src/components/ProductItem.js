@@ -17,14 +17,14 @@ const styles = {
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '100%'
   },
 }
 
 const ProductItem = ({ classes, product, onAddToCart }) => {
   // const { classes } = props
   return (
-    <Grid item xs={12} sm={6}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
