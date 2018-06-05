@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import PaginatedProductTable from './components/PaginatedProductTable'
+import Cart from './components/Cart'
 
 import './css/App.css'
 
@@ -26,8 +27,6 @@ const albums = [
   { id: 180, price: 1099, artist: 'Nirvana', title: 'Nevermind', slug: 'nirvana-nevermind', image: 'nirvana-nevermind.jpg' }
 ]
 
-const Cart = () => (<h1>Cart</h1>)
-
 const withProps = ({ props, Component }) => routerProps => <Component {...props} {...routerProps} />
 
 class App extends Component {
@@ -39,6 +38,9 @@ class App extends Component {
       cart: []
     }
     this.onAddToCart = this.onAddToCart.bind(this)
+    this.onRemoveFromCart = this.onRemoveFromCart.bind(this)
+    this.onCartItemPlusOne = this.onCartItemPlusOne.bind(this)
+    this.onCartItemMinusOne = this.onCartItemMinusOne.bind(this)
   }
   // reçoit productId
   onAddToCart (productId) {
@@ -63,17 +65,74 @@ class App extends Component {
       cart: newCart
     }))
   }
+  // reçoit productId
+  onRemoveFromCart (productId) {
+    // const cart = this.state.cart
+    const { cart } = this.state
+
+    // Copie le cart dans newCart
+    const newCart = [...cart]
+
+    // Cherche l'index de l'élément dans le tableau
+    const indexInCart = cart.findIndex(item => item.id === productId)
+
+    // Si élément non trouvé
+    if (indexInCart === -1) {
+      return
+    }
+    else {
+      newCart.splice(indexInCart, 1)
+    }
+
+    this.setState(() => ({
+      cart: newCart
+    }))
+  }
+  // reçoit productId
+  onCartItemPlusOne (productId) {
+    this.onCartItemModifyQty(productId, 1)
+  }
+  // reçoit productId
+  onCartItemMinusOne (productId) {
+    this.onCartItemModifyQty(productId, 1)
+  }
+
+  onCartItemModifyQty(productId, increment) {
+    // const cart = this.state.cart
+    const { cart } = this.state
+
+    // Copie le cart dans newCart
+    const newCart = [...cart]
+
+    // Cherche l'index de l'élément dans le tableau
+    const indexInCart = cart.findIndex(item => item.id === productId)
+
+    // Si élément non trouvé
+    if (indexInCart === -1) {
+      return
+    }
+    else {
+      newCart[indexInCart].qty += increment
+    }
+
+    this.setState(() => ({
+      cart: newCart
+    }))
+  }
   render () {
-    const ProductTableWithProps = withProps({ props: { products: this.state.albums, onAddToCart: this.onAddToCart }, Component: PaginatedProductTable } )
+    const { onAddToCart, onRemoveFromCart, onCartItemPlusOne, onCartItemMinusOne } = this
+    const ProductTableWithProps = withProps({ props: { products: this.state.albums, onAddToCart }, Component: PaginatedProductTable } )
+    const CartWithProps = withProps({ props: { products: this.state.albums, cart: this.state.cart, onRemoveFromCart, onCartItemPlusOne, onCartItemMinusOne }, Component: Cart } )
     return (
       <Router>
         <div className="App container">
           <Navbar user={this.state.user} cart={this.state.cart} />
 
-          <Route exact path="/" component={ProductTableWithProps} />
-          <Route path="/page/:page" component={ProductTableWithProps} />
-          <Route path="/cart" component={Cart} />
-
+          <Switch>
+            <Route exact path="/" component={ProductTableWithProps} />
+            <Route path="/page/:page" component={ProductTableWithProps} />
+            <Route path="/cart" component={CartWithProps} />
+          </Switch>
         </div>
       </Router>
     )

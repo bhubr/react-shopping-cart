@@ -40,7 +40,7 @@ const ProductItem = ({ classes, product, onAddToCart }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" onClick={e => onAddToCart(product.id)}>
+          <Button size="small" color="primary" variant="contained" onClick={e => onAddToCart(product.id)}>
             Add to Cart
           </Button>
           <Button size="small" color="primary">
