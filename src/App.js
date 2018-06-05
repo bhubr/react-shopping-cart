@@ -131,7 +131,7 @@ class App extends Component {
     const CartWithProps = withProps({ props: cartProps, Component: Cart })
     return (
       <Router>
-        <div className="App container">
+        <div className="App">
           <Navbar user={this.state.user} cart={this.state.cart} />
 
           <Switch>
