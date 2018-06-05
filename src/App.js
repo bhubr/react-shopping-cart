@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import PaginatedProductTable from './components/PaginatedProductTable'
 
-import './App.css'
+import './css/App.css'
 
 const albums = [
   { id: 10, price: 899, artist: 'Coldplay', title: 'Parachutes', slug: 'coldplay-parachutes', image: 'coldplay-parachutes.jpg' },
@@ -20,10 +20,10 @@ const albums = [
   { id: 120, price: 1499, artist: 'John Mayer', title: 'Born and Raised', slug: 'john-mayer-born-and-raised', image: 'john-mayer-born-and-raised.jpg' },
   { id: 130, price: 1099, artist: 'John Mayer', title: 'Room for Squares', slug: 'john-mayer-room-for-squares', image: 'john-mayer-room-for-squares.jpg' },
   { id: 140, price: 1099, artist: 'John Mayer', title: 'Where The Light Is', slug: 'john-mayer-where-the-light-is', image: 'john-mayer-where-the-light-is.jpg' },
-  { id: 140, price: 899, artist: 'Johnny Cash', title: 'Ring Of Fire', slug: 'johnny-cash-ring-of-fire', image: 'johnny-cash-ring-of-fire.jpg' },
-  { id: 140, price: 1049, artist: 'Johnny Cash', title: 'The Essential', slug: 'johnny-cash-the-essential', image: 'johnny-cash-the-essential.jpg' },
-  { id: 140, price: 1199, artist: 'Joni Mitchell', title: 'Blue', slug: 'joni-mitchell-blue', image: 'joni-mitchell-blue.jpg' },
-  { id: 140, price: 1099, artist: 'Nirvana', title: 'Nevermind', slug: 'nirvana-nevermind', image: 'nirvana-nevermind.jpg' }
+  { id: 150, price: 899, artist: 'Johnny Cash', title: 'Ring Of Fire', slug: 'johnny-cash-ring-of-fire', image: 'johnny-cash-ring-of-fire.jpg' },
+  { id: 160, price: 1049, artist: 'Johnny Cash', title: 'The Essential', slug: 'johnny-cash-the-essential', image: 'johnny-cash-the-essential.jpg' },
+  { id: 170, price: 1199, artist: 'Joni Mitchell', title: 'Blue', slug: 'joni-mitchell-blue', image: 'joni-mitchell-blue.jpg' },
+  { id: 180, price: 1099, artist: 'Nirvana', title: 'Nevermind', slug: 'nirvana-nevermind', image: 'nirvana-nevermind.jpg' }
 ]
 
 const Cart = () => (<h1>Cart</h1>)
@@ -38,33 +38,33 @@ class App extends Component {
       user: null,
       cart: []
     }
+    this.onAddToCart = this.onAddToCart.bind(this)
   }
-  // onAddUser (e) {
-  //   e.preventDefault()
-  //   const inputs = e.target.querySelectorAll('input')
-  //   const { users, nextId } = this.state
-  //   const newUser = {}
-  //   for (let input of inputs) {
-  //     newUser[input.id] = input.value
-  //   }
-  //   newUser.id = nextId
-  //   this.setState((prevState, props) => ({
-  //     users: [...users, newUser],
-  //     nextId: nextId + 1
-  //   }))
-  // }
-  // onDeleteUser (userId) {
-  //   console.log('delete user', userId)
-  //   const { users } = this.state
-  //   const newUsers = [...users]
-  //   const index = users.findIndex(u => u.id === userId)
-  //   newUsers.splice(index, 1)
-  //   this.setState({
-  //     users: newUsers
-  //   })
-  // }
+  // reçoit productId
+  onAddToCart (productId) {
+    // const cart = this.state.cart
+    const { cart } = this.state
+
+    // Copie le cart dans newCart
+    const newCart = [...cart]
+
+    // Cherche l'index de l'élément dans le tableau
+    const indexInCart = cart.findIndex(item => item.id === productId)
+
+    // Si élément non trouvé
+    if (indexInCart === -1) {
+      newCart.push({ id: productId, qty: 1 })
+    }
+    else {
+      newCart[indexInCart].qty += 1
+    }
+
+    this.setState(() => ({
+      cart: newCart
+    }))
+  }
   render () {
-    const ProductTableWithProps = withProps({ props: { products: this.state.albums }, Component: PaginatedProductTable } )
+    const ProductTableWithProps = withProps({ props: { products: this.state.albums, onAddToCart: this.onAddToCart }, Component: PaginatedProductTable } )
     return (
       <Router>
         <div className="App container">
@@ -73,6 +73,7 @@ class App extends Component {
           <Route exact path="/" component={ProductTableWithProps} />
           <Route path="/page/:page" component={ProductTableWithProps} />
           <Route path="/cart" component={Cart} />
+
         </div>
       </Router>
     )

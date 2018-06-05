@@ -3,10 +3,10 @@ import ProductItem from './ProductItem'
 
 class ProductTable extends Component {
   render() {
-    const { products } = this.props
+    const { products, onAddToCart } = this.props
     return (
       <div className="row">
-        {products.map((p, i) => <ProductItem key={i} product={p} />)}
+        {products.map((p, i) => <ProductItem key={i} product={p} onAddToCart={onAddToCart} />)}
       </div>
     )
   }

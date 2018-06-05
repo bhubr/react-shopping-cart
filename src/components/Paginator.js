@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import ProductItem from './ProductItem'
 
 class Paginator extends Component {
   render () {

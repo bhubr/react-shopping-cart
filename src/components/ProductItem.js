@@ -2,6 +2,15 @@ import React, { Component } from 'react'
 import formatPrice from '../helpers/formatPrice'
 
 class ProductItem extends Component {
+  constructor (props) {
+    super(props)
+    this.onAdd = this.onAdd.bind(this)
+  }
+  onAdd (e) {
+    // const { product: { id } } = this.props
+    const id = this.props.product.id
+    this.props.onAddToCart(id)
+  }
   render () {
     const { product } = this.props
     return (
@@ -13,7 +22,7 @@ class ProductItem extends Component {
             <p className="card-text">Album by {product.artist}</p>
             <div className="d-flex justify-content-between align-items-center">
               <div className="btn-group">
-                <button type="button" className="btn btn-sm btn-primary">Add to Cart</button>
+                <button type="button" className="btn btn-sm btn-primary" onClick={this.onAdd}>Add to Cart</button>
                 <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
               </div>
               <span className="text-muted">{formatPrice(product.price)}€</span>
