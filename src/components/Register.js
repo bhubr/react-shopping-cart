@@ -25,12 +25,13 @@ const styles = {
   }
 }
 
-class Login extends React.Component {
+class Register extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      passwordConfirm: ''
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -90,9 +91,24 @@ class Login extends React.Component {
             }
           />
         </FormControl>
+        <FormControl className={classes.margin}>
+          <InputLabel htmlFor="passwordConfirm">Password confirmation</InputLabel>
+          <Input
+            className={classes.input}
+            id="passwordConfirm"
+            type="passwordConfirm"
+            name="passwordConfirm"
+            onChange={this.onChange}
+            startAdornment={
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            }
+          />
+        </FormControl>
         <div className={classes.center}>
           <Button type="submit" color="primary" variant="raised">
-            Sign in
+            Sign up
           </Button>
         </div>
       </form>
@@ -100,8 +116,8 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+Register.propTypes = {
   classes: PropTypes.object
 }
 
-export default withStyles(styles)(Login)
+export default withStyles(styles)(Register)
