@@ -9,16 +9,20 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import Switch from '@material-ui/core/Switch'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import { Link } from 'react-router-dom'
 
-const styles = {
+const styles = theme => ({
   appBar: {
     marginBottom: 30
+  },
+  links: {
+    color: '#fff',
+    textDecoration: 'none'
+  },
+  margin: {
+    margin: theme.spacing.unit * 2,
   },
   root: {
     flexGrow: 1,
@@ -30,7 +34,7 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-}
+})
 
 class MenuAppBar extends React.Component {
   state = {
@@ -65,11 +69,11 @@ class MenuAppBar extends React.Component {
             </IconButton>
 
             <Typography variant="title" color="inherit" className={classes.flex}>
-              <Link to="/">Title</Link>
+              <Link className={classes.links} to="/">Title</Link>
             </Typography>
 
-            <Link to="/cart">
-              <Badge className={classes.margin} badgeContent={totalQty} color="primary">
+            <Link className={classes.links} to="/cart">
+              <Badge className={classes.margin} badgeContent={totalQty} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </Link>
