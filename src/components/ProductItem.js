@@ -12,10 +12,6 @@ import Typography from '@material-ui/core/Typography'
 // import formatPrice from '../helpers/formatPrice'
 
 const styles = {
-  bold: {
-    fontWeight: 'bold',
-    color: 'red'
-  },
   card: {
     maxWidth: 345
   },
@@ -27,13 +23,12 @@ const styles = {
 
 const ProductItem = (props) => {
   const { classes, product, onAddToCart } = props
-  const { bold, card } = classes
+  const { card, media } = classes
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <Card className={{...bold, ...card}}>
-        <p>Pouet</p>
+      <Card className={card}>
         <CardMedia
-          className={classes.media}
+          className={media}
           image={ `/img/${product.image}` }
           title={product.title}
         />
