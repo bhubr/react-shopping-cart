@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import PaginatedProductTable from './components/PaginatedProductTable'
 import Cart from './components/Cart'
+import Login from './components/Login'
 import CartStorage from './helpers/CartStorage'
 import AboutPage from './components/AboutPage'
 
@@ -158,6 +159,7 @@ class App extends Component {
             <Route exact path="/" component={ProductTableWithProps} />
             <Route path="/page/:page" component={PaginatedProductTable} />
             <Route path="/cart" component={CartWithProps} />
+            <Route path="/login" component={Login} />
             <Route path="/about" component={withTitleAndText('About page with custom title', 'Je passe une props text')} />
           </Switch>
         </div>
