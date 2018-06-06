@@ -6,6 +6,7 @@ const PER_PAGE = 3
 
 class PaginatedProductTable extends Component {
   render() {
+    console.log(this.props)
     const { products, onAddToCart, match: { params: { page } } } = this.props
     const index = ! page || page === 1 ? 0 : page - 1
     const sliceStart = index * PER_PAGE

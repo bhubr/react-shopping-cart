@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import PaginatedProductTable from './components/PaginatedProductTable'
 import Cart from './components/Cart'
 import CartStorage from './helpers/CartStorage'
+import AboutPage from './components/AboutPage'
 
 const albums = [
   { id: 10, price: 899, artist: 'Coldplay', title: 'Parachutes', slug: 'coldplay-parachutes', image: 'coldplay-parachutes.jpg' },
@@ -129,6 +130,25 @@ class App extends Component {
     const ProductTableWithProps = withProps({ props: productTableProps, Component: PaginatedProductTable })
     const cartProps = { products: this.state.albums, cart: this.state.cart, onRemoveFromCart, onCartItemPlusOne, onCartItemMinusOne }
     const CartWithProps = withProps({ props: cartProps, Component: Cart })
+
+    // Ci-dessous: ce qu'on appelle un HOC ou Higher Order Component
+    // Doc: https://reactjs.org/docs/higher-order-components.html
+
+    // L'idée est d'avoir une fonction qui reçoit des paramètres,
+    // et va renvoyer un composant.
+    // La fonction ci-dessous prend des paramètres title et text
+    // Elle renvoie un composant sous forme de fonction anonyme:
+    // ce composant a bien la syntaxe des composants écrits comme fonctions,
+    // props => <DuJSX />
+    // Dans le JSX de ce composant, on peut du coup utiliser à la fois
+    // les paramètres title et text, et le paramètre props (qui va être donné
+    // par le routeur)
+
+    // Tout comme la syntaxe [...cart] permet de créer un NOUVEAU tableau,
+    // contenant tous les éléments de cart, la syntaxe {...props} permet
+    // de passer toutes les props d'un coup au composant d'en-dessous
+    const withTitleAndText = (title, text) => props => <AboutPage title={title} text={text} {...props} />
+
     return (
       <Router>
         <div className="App">
@@ -136,8 +156,9 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/" component={ProductTableWithProps} />
-            <Route path="/page/:page" component={ProductTableWithProps} />
+            <Route path="/page/:page" component={PaginatedProductTable} />
             <Route path="/cart" component={CartWithProps} />
+            <Route path="/about" component={withTitleAndText('About page with custom title', 'Je passe une props text')} />
           </Switch>
         </div>
       </Router>
